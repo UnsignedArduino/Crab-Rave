@@ -1,36 +1,13 @@
-function part_1 () {
-	
+function make_player () {
+    sprite_player = sprites.create(assets.image`crab_idle_left`, SpriteKind.Player)
+    tiles.placeOnTile(sprite_player, tiles.getTileLocation(4, 5))
+    sprite_player.x += tiles.tileWidth() / 2
 }
-function part_2 () {
-	
+function setup () {
+    scene.setBackgroundColor(9)
+    tiles.setTilemap(tilemap`map`)
+    make_player()
 }
-function main2 () {
-	
-}
-function end () {
-	
-}
-function transition_2_main () {
-	
-}
-function transition_1_2 () {
-	
-}
-function transition_main_beginning () {
-	
-}
-function beginning () {
-	
-}
-function transition_main2_end () {
-	
-}
-function transition_2_main2 () {
-	
-}
-function transition_beginning_1 () {
-	
-}
-function main () {
-	
-}
+let sprite_player: Sprite = null
+stats.turnStats(true)
+setup()

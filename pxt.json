@@ -7,7 +7,8 @@
         "Timers": "github:microsoft/arcade-timers#v1.1.0",
         "Color Fading": "github:jwunderl/pxt-color#v0.2.1",
         "Stats": "github:UnsignedArduino/Stats#9102333e1ca6cbaf8a979ceb252274b2f09b9005",
-        "tilemaps": "github:microsoft/pxt-tilemaps#v1.12.0"
+        "tilemaps": "github:microsoft/pxt-tilemaps#v1.12.0",
+        "Musical-Images": "github:UnsignedArduino/Musical-Images#07590a44032d9f620f01570e36933459f9d4c5fa"
     },
     "files": [
         "main.blocks",

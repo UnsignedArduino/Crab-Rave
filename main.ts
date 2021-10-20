@@ -1,4 +1,13 @@
-function get_part (part: number) {
+function part_1 () {
+	
+}
+function fade_out (block: boolean) {
+    color.startFade(color.Black, color.originalPalette, 1000)
+    if (block) {
+        color.pauseUntilFadeDone()
+    }
+}
+function get_part_music (part: number) {
     if (part == 1 || part == 6) {
         return assets.animation`beginning`
     } else if (part == 2 || part == 7) {
@@ -31,15 +40,30 @@ function make_player () {
 function setup () {
     scene.setBackgroundColor(9)
     tiles.setTilemap(tilemap`map`)
+    info.setScore(0)
     musical = MusicalImages.create_musical_image()
     make_player()
 }
-let sprite_player: Sprite = null
+function run_part (part: number) {
+    if (part < 1 && part > 14) {
+        return
+    }
+    timer.background(function () {
+        if (part == 1) {
+            part_1()
+        }
+    })
+    MusicalImages.set_queue(musical, get_part_music(part))
+    MusicalImages.play(musical)
+}
 let musical: MusicalImages.MusicalImage = null
+let sprite_player: Sprite = null
+color.setPalette(
+color.Black
+)
 stats.turnStats(true)
 setup()
+fade_out(true)
 for (let index = 0; index <= 13; index++) {
-    MusicalImages.set_queue(musical, get_part(index + 1))
-    sprite_player.sayText("Part " + (index + 1))
-    MusicalImages.play(musical)
+    run_part(index + 1)
 }

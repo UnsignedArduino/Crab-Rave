@@ -58,6 +58,9 @@ function make_rhythm_stuff () {
     sprite_rhythm_bar = sprites.create(assets.image`rhythm_bar`, SpriteKind.RhythmStuff)
     sprite_rhythm_bar.x = scene.screenWidth() / 2
     sprite_rhythm_bar.top = 16
+    sprite_overlapper = sprites.create(assets.image`overlapper`, SpriteKind.Player)
+    sprite_overlapper.left = sprite_rhythm_bar.left + 3
+    sprite_overlapper.top = 16
 }
 function setup () {
     scene.setBackgroundColor(9)
@@ -84,6 +87,7 @@ function change_score (s: number) {
     update_score()
 }
 let musical: MusicalImages.MusicalImage = null
+let sprite_overlapper: Sprite = null
 let sprite_rhythm_bar: Sprite = null
 let sprite_player: Sprite = null
 let sprite_score: TextSprite = null

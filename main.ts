@@ -13,6 +13,7 @@ sprites.onOverlap(SpriteKind.RhythmButton, SpriteKind.RhythmFail, function (spri
     popup_message(0, false)
 })
 function part_1 () {
+    animation_state = 0
     do_buttons_for_part(1, 2000)
 }
 function get_button_pressed () {
@@ -128,6 +129,7 @@ function setup () {
     update_score()
     button_speed = 50
     current_part = 0
+    animation_state = 0
     allowed_buttons = [
     controller.combos.idToString(controller.combos.ID.up),
     controller.combos.idToString(controller.combos.ID.down),
@@ -221,6 +223,7 @@ let sprite_score: TextSprite = null
 let sprite_player: Sprite = null
 let accuracy = 0
 let score = 0
+let animation_state = 0
 color.setPalette(
 color.Black
 )
@@ -236,5 +239,16 @@ game.onUpdateInterval(20, function () {
     if (score > show_score) {
         show_score += 1
         update_score()
+    }
+})
+forever(function () {
+    if (animation_state == 0) {
+        animation.runImageAnimation(
+        sprite_player,
+        assets.animation`crab_left_animation`,
+        200,
+        false
+        )
+        pause(assets.animation`crab_left_animation`.length * 200)
     }
 })

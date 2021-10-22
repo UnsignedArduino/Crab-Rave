@@ -14,6 +14,31 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "overlapper"
     },
+    "image8": {
+        "data": "hwQIAAgAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMw==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "button_failed_overlapper"
+    },
+    "image4": {
+        "data": "hwQIAAgAAACAiIgIiBERiBjxEYEYHxGBGB8RgRjxEYGIERGIgIiICA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "up_button"
+    },
+    "image5": {
+        "data": "hwQIAAgAAACAiIgIiBERiBgRH4EYEfGBGBHxgRgRH4GIERGIgIiICA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "down_button"
+    },
+    "image6": {
+        "data": "hwQIAAgAAACAiIgIiBERiBjxH4EYH/GBGBERgRgREYGIERGIgIiICA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "left_button"
+    },
+    "image7": {
+        "data": "hwQIAAgAAACAiIgIiBERiBgREYEYERGBGB/xgRjxH4GIERGIgIiICA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "right_button"
+    },
     "anim1": {
         "namespace": "myAnimations",
         "id": "anim1",

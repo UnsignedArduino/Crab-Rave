@@ -44,6 +44,61 @@ f . . . . . . f
 f f . . . . f f 
 . f f f f f f . 
 `;
+            case "image8":
+            case "button_failed_overlapper":return img`
+3 3 3 3 3 3 3 3 
+3 3 3 3 3 3 3 3 
+3 3 3 3 3 3 3 3 
+3 3 3 3 3 3 3 3 
+3 3 3 3 3 3 3 3 
+3 3 3 3 3 3 3 3 
+3 3 3 3 3 3 3 3 
+3 3 3 3 3 3 3 3 
+`;
+            case "image4":
+            case "up_button":return img`
+. 8 8 8 8 8 8 . 
+8 8 1 1 1 1 8 8 
+8 1 1 f f 1 1 8 
+8 1 f 1 1 f 1 8 
+8 1 1 1 1 1 1 8 
+8 1 1 1 1 1 1 8 
+8 8 1 1 1 1 8 8 
+. 8 8 8 8 8 8 . 
+`;
+            case "image5":
+            case "down_button":return img`
+. 8 8 8 8 8 8 . 
+8 8 1 1 1 1 8 8 
+8 1 1 1 1 1 1 8 
+8 1 1 1 1 1 1 8 
+8 1 f 1 1 f 1 8 
+8 1 1 f f 1 1 8 
+8 8 1 1 1 1 8 8 
+. 8 8 8 8 8 8 . 
+`;
+            case "image6":
+            case "left_button":return img`
+. 8 8 8 8 8 8 . 
+8 8 1 1 1 1 8 8 
+8 1 1 f 1 1 1 8 
+8 1 f 1 1 1 1 8 
+8 1 f 1 1 1 1 8 
+8 1 1 f 1 1 1 8 
+8 8 1 1 1 1 8 8 
+. 8 8 8 8 8 8 . 
+`;
+            case "image7":
+            case "right_button":return img`
+. 8 8 8 8 8 8 . 
+8 8 1 1 1 1 8 8 
+8 1 1 1 f 1 1 8 
+8 1 1 1 1 f 1 8 
+8 1 1 1 1 f 1 8 
+8 1 1 1 f 1 1 8 
+8 8 1 1 1 1 8 8 
+. 8 8 8 8 8 8 . 
+`;
         }
         return null;
     })

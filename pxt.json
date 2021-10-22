@@ -9,7 +9,8 @@
         "Stats": "github:UnsignedArduino/Stats#9102333e1ca6cbaf8a979ceb252274b2f09b9005",
         "tilemaps": "github:microsoft/pxt-tilemaps#v1.12.0",
         "Musical-Images": "github:UnsignedArduino/Musical-Images#07590a44032d9f620f01570e36933459f9d4c5fa",
-        "arcade-sprite-util": "github:jwunderl/arcade-sprite-util#v0.2.4"
+        "arcade-sprite-util": "github:jwunderl/arcade-sprite-util#v0.2.4",
+        "pxt-button-combos": "github:jwunderl/pxt-button-combos#v0.0.24"
     },
     "files": [
         "main.blocks",

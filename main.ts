@@ -5,7 +5,11 @@ namespace SpriteKind {
     export const RhythmFail = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.RhythmButton, SpriteKind.RhythmFail, function (sprite, otherSprite) {
-    sprite.destroy()
+    sprite.setVelocity(0, 100)
+    sprite.setFlag(SpriteFlag.Ghost, true)
+    timer.after(100, function () {
+        sprite.destroy()
+    })
     popup_message(0, false)
 })
 function part_1 () {
@@ -36,7 +40,11 @@ function fade_out (block: boolean) {
 sprites.onOverlap(SpriteKind.RhythmButton, SpriteKind.RhythmSuccess, function (sprite, otherSprite) {
     if (get_button_pressed() != "") {
         if (sprites.readDataString(sprite, "direction") == get_button_pressed()) {
-            sprite.destroy()
+            sprite.setVelocity(0, -100)
+            sprite.setFlag(SpriteFlag.Ghost, true)
+            timer.after(100, function () {
+                sprite.destroy()
+            })
             accuracy = Math.map(Math.abs(sprite.x - otherSprite.x), 8, 0, 0, 100)
             if (false) {
                 sprite_player.sayText(Math.abs(sprite.x - otherSprite.x))
@@ -50,7 +58,11 @@ sprites.onOverlap(SpriteKind.RhythmButton, SpriteKind.RhythmSuccess, function (s
             change_score(Math.round(accuracy))
             popup_message(accuracy, true)
         } else {
-            sprite.destroy()
+            sprite.setVelocity(0, -100)
+            sprite.setFlag(SpriteFlag.Ghost, true)
+            timer.after(100, function () {
+                sprite.destroy()
+            })
             popup_message(0, false)
         }
     }

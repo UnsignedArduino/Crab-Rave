@@ -6,12 +6,26 @@ namespace SpriteKind {
 }
 sprites.onOverlap(SpriteKind.RhythmButton, SpriteKind.RhythmFail, function (sprite, otherSprite) {
     sprite.destroy()
+    popup_message(0, false)
 })
 function part_1 () {
     button_frequency = 2000
     while (current_part == 1) {
         summon_button_press(allowed_buttons._pickRandom())
         pause(randint(button_frequency - 500, button_frequency + 500))
+    }
+}
+function get_button_pressed () {
+    if (controller.up.isPressed()) {
+        return controller.combos.idToString(controller.combos.ID.up)
+    } else if (controller.down.isPressed()) {
+        return controller.combos.idToString(controller.combos.ID.down)
+    } else if (controller.left.isPressed()) {
+        return controller.combos.idToString(controller.combos.ID.left)
+    } else if (controller.right.isPressed()) {
+        return controller.combos.idToString(controller.combos.ID.right)
+    } else {
+        return ""
     }
 }
 function set_score (s: number) {
@@ -24,6 +38,28 @@ function fade_out (block: boolean) {
         color.pauseUntilFadeDone()
     }
 }
+sprites.onOverlap(SpriteKind.RhythmButton, SpriteKind.RhythmSuccess, function (sprite, otherSprite) {
+    if (get_button_pressed() != "") {
+        if (sprites.readDataString(sprite, "direction") == get_button_pressed()) {
+            sprite.destroy()
+            accuracy = Math.map(Math.abs(sprite.x - otherSprite.x), 8, 0, 0, 100)
+            if (false) {
+                sprite_player.sayText(Math.abs(sprite.x - otherSprite.x))
+            }
+            if (false) {
+                sprite_player.sayText(Math.round(accuracy))
+            }
+            if (false) {
+                sprite_player.sayText(accuracy / 100)
+            }
+            change_score(Math.round(accuracy))
+            popup_message(accuracy, true)
+        } else {
+            sprite.destroy()
+            popup_message(0, false)
+        }
+    }
+})
 function update_score () {
     if (!(sprite_score)) {
         sprite_score = textsprite.create("", 0, 15)
@@ -96,10 +132,37 @@ function setup () {
 }
 function summon_button_press (button: string) {
     sprite_button_press = sprites.create(get_button_image(button), SpriteKind.RhythmButton)
+    sprites.setDataString(sprite_button_press, "direction", button)
     sprite_button_press.top = sprite_overlapper.top
     sprite_button_press.right = sprite_rhythm_bar.right
     sprite_button_press.z = 1
     sprite_button_press.vx = button_speed * -1
+}
+function popup_message (accuracy: number, is_success: boolean) {
+    if (!(spriteutils.isDestroyed(sprite_message))) {
+        sprite_message.destroy()
+    }
+    if (is_success) {
+        sprite_message = textsprite.create(get_success_message(accuracy), 0, 7)
+    } else {
+        sprite_message = textsprite.create("Fail", 0, 2)
+    }
+    sprite_message.top = sprite_overlapper.bottom + 2
+    sprite_message.left = sprite_overlapper.x
+    sprite_message.lifespan = 1000
+}
+function get_success_message (accuracy: number) {
+    if (accuracy > 90) {
+        return "Amazing!"
+    } else if (accuracy > 80) {
+        return "Awesome!"
+    } else if (accuracy > 70) {
+        return "Great"
+    } else if (accuracy > 60) {
+        return "Good!"
+    } else {
+        return "Success"
+    }
 }
 function get_button_image (button: string) {
     if (button == controller.combos.idToString(controller.combos.ID.up)) {
@@ -131,14 +194,16 @@ function change_score (s: number) {
     score += s
     update_score()
 }
+let sprite_message: TextSprite = null
 let sprite_button_press: Sprite = null
 let musical: MusicalImages.MusicalImage = null
 let button_speed = 0
 let sprite_failed_overlapper: Sprite = null
 let sprite_overlapper: Sprite = null
 let sprite_rhythm_bar: Sprite = null
-let sprite_player: Sprite = null
 let sprite_score: TextSprite = null
+let sprite_player: Sprite = null
+let accuracy = 0
 let score = 0
 let allowed_buttons: string[] = []
 let current_part = 0

@@ -30,7 +30,6 @@ function get_button_pressed () {
 }
 function set_score (s: number) {
     score = s
-    update_score()
 }
 function fade_out (block: boolean) {
     color.startFade(color.Black, color.originalPalette, 1000)
@@ -66,7 +65,7 @@ function update_score () {
         sprite_score.top = 4
         sprite_score.setFlag(SpriteFlag.Ghost, true)
     }
-    sprite_score.setText("Score: " + score)
+    sprite_score.setText("Score: " + show_score)
     sprite_score.x = scene.screenWidth() / 2
 }
 function get_part_music (part: number) {
@@ -117,6 +116,8 @@ function setup () {
     scene.setBackgroundColor(9)
     tiles.setTilemap(tilemap`map`)
     set_score(0)
+    show_score = 0
+    update_score()
     button_speed = 50
     button_frequency = 1000
     current_part = 0
@@ -192,7 +193,6 @@ function run_part (part: number) {
 }
 function change_score (s: number) {
     score += s
-    update_score()
 }
 let sprite_message: TextSprite = null
 let sprite_button_press: Sprite = null
@@ -201,6 +201,7 @@ let button_speed = 0
 let sprite_failed_overlapper: Sprite = null
 let sprite_overlapper: Sprite = null
 let sprite_rhythm_bar: Sprite = null
+let show_score = 0
 let sprite_score: TextSprite = null
 let sprite_player: Sprite = null
 let accuracy = 0
@@ -214,6 +215,14 @@ color.Black
 stats.turnStats(true)
 setup()
 fade_out(true)
-for (let index = 0; index <= 13; index++) {
-    run_part(index + 1)
-}
+timer.background(function () {
+    for (let index = 0; index <= 13; index++) {
+        run_part(index + 1)
+    }
+})
+game.onUpdateInterval(20, function () {
+    if (score > show_score) {
+        show_score += 1
+        update_score()
+    }
+})

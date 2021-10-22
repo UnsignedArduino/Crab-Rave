@@ -9,11 +9,7 @@ sprites.onOverlap(SpriteKind.RhythmButton, SpriteKind.RhythmFail, function (spri
     popup_message(0, false)
 })
 function part_1 () {
-    button_frequency = 2000
-    while (current_part == 1) {
-        summon_button_press(allowed_buttons._pickRandom())
-        pause(randint(button_frequency - 500, button_frequency + 500))
-    }
+    do_buttons_for_part(1, 2000)
 }
 function get_button_pressed () {
     if (controller.up.isPressed()) {
@@ -119,7 +115,6 @@ function setup () {
     show_score = 0
     update_score()
     button_speed = 50
-    button_frequency = 1000
     current_part = 0
     allowed_buttons = [
     controller.combos.idToString(controller.combos.ID.up),
@@ -194,9 +189,17 @@ function run_part (part: number) {
 function change_score (s: number) {
     score += s
 }
+function do_buttons_for_part (part: number, frequency: number) {
+    while (current_part == part) {
+        summon_button_press(allowed_buttons._pickRandom())
+        pause(randint(frequency - 500, frequency + 500))
+    }
+}
 let sprite_message: TextSprite = null
 let sprite_button_press: Sprite = null
 let musical: MusicalImages.MusicalImage = null
+let allowed_buttons: string[] = []
+let current_part = 0
 let button_speed = 0
 let sprite_failed_overlapper: Sprite = null
 let sprite_overlapper: Sprite = null
@@ -206,9 +209,6 @@ let sprite_score: TextSprite = null
 let sprite_player: Sprite = null
 let accuracy = 0
 let score = 0
-let allowed_buttons: string[] = []
-let current_part = 0
-let button_frequency = 0
 color.setPalette(
 color.Black
 )

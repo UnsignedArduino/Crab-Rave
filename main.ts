@@ -87,6 +87,10 @@ function update_score () {
     sprite_score.setText("Score: " + show_score)
     sprite_score.x = scene.screenWidth() / 2
 }
+function part_5 () {
+    animation_state = 4
+    do_buttons_for_part(5, 1000)
+}
 function get_part_music (part: number) {
     if (part == 1 || part == 6) {
         return assets.animation`beginning`
@@ -249,6 +253,8 @@ function run_part (part: number) {
             part_3()
         } else if (part == 4) {
             part_4_transition()
+        } else if (part == 5) {
+            part_5()
         }
     })
     MusicalImages.set_queue(musical, get_part_music(part))
@@ -324,7 +330,7 @@ forever(function () {
             if (sprites.readDataBoolean(crab, "facing_left")) {
                 animation.runImageAnimation(
                 crab,
-                assets.animation`crab_left_animation`,
+                assets.animation`crab_right_walking_animation0`,
                 frame_delay,
                 false
                 )
@@ -338,5 +344,24 @@ forever(function () {
             }
         }
         pause(assets.animation`crab_left_animation`.length * frame_delay)
+    } else {
+        for (let crab of all_crabs) {
+            if (sprites.readDataBoolean(crab, "facing_left")) {
+                animation.runImageAnimation(
+                crab,
+                assets.animation`crab_attack_left`,
+                100,
+                false
+                )
+            } else {
+                animation.runImageAnimation(
+                crab,
+                assets.animation`crab_right_attack`,
+                100,
+                false
+                )
+            }
+        }
+        pause(assets.animation`crab_attack_left`.length * 100)
     }
 })

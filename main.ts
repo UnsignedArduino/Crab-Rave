@@ -301,7 +301,11 @@ timer.background(function () {
 })
 game.onUpdateInterval(20, function () {
     if (score > show_score) {
-        show_score += 1
+        if (score - show_score > 20) {
+            show_score += 3
+        } else {
+            show_score += 1
+        }
         update_score()
     }
 })

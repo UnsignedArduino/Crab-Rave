@@ -22,17 +22,6 @@ c 5 5 5 c 4 c 5 5 5 c 4 c 5 c .
 c 5 5 5 5 c 5 5 5 5 c 4 c 5 c . 
 . c c c c c c c c c . . c c c . 
 `;
-            case "image2":
-            case "rhythm_bar":return img`
-.cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc.
-cc................................................................................................................................................cc
-c..................................................................................................................................................c
-c..................................................................................................................................................c
-c..................................................................................................................................................c
-c..................................................................................................................................................c
-cc................................................................................................................................................cc
-.cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc.
-`;
             case "image3":
             case "overlapper":return img`
 . f f f f f f . 
@@ -136,6 +125,17 @@ c 3 3 3 3 c c b 5 5 5 5 5 c c .
 . c 5 c 4 c 5 5 5 c 4 c 5 5 5 c 
 . c 5 c 4 c 5 5 5 5 c 5 5 5 5 c 
 . c c c . . c c c c c c c c c . 
+`;
+            case "image2":
+            case "rhythm_bar":return img`
+.cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc.
+ccddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddcc
+cddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddc
+cddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddc
+cddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddc
+cddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddc
+ccddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddcc
+.cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc.
 `;
         }
         return null;

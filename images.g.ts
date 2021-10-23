@@ -99,6 +99,44 @@ f f . . . . f f
 8 8 1 1 1 1 8 8 
 . 8 8 8 8 8 8 . 
 `;
+            case "image9":
+            case "crab":return img`
+. . . . . . . . . . . c c . . . 
+. . . . . . . c c c c 6 3 c . . 
+. . . . . . c 6 3 3 3 3 6 c . . 
+. . c c . c 6 c c 3 3 3 3 3 c . 
+. b 5 5 c 6 c 5 5 c 3 3 3 3 3 c 
+. f f 5 c 6 c 5 f f 3 3 3 3 3 c 
+. f f 5 c 6 c 5 f f 6 3 3 3 c c 
+. b 5 5 3 c 3 5 5 c 6 6 6 6 c c 
+. . b 5 5 3 5 5 c 3 3 3 3 3 3 c 
+. c c 5 5 5 5 5 b c c 3 3 3 3 c 
+c 5 5 4 5 5 5 4 b 5 5 c 3 3 c . 
+b 5 4 b 4 4 4 4 b b 5 c b b . . 
+c 4 5 5 b 4 b 5 5 5 4 c 4 5 b . 
+c 5 5 5 c 4 c 5 5 5 c 4 c 5 c . 
+c 5 5 5 5 c 5 5 5 5 c 4 c 5 c . 
+. c c c c c c c c c . . c c c . 
+`;
+            case "image10":
+            case "crab_idle_right":return img`
+. . . c c . . . . . . . . . . . 
+. . c 3 6 c c c c . . . . . . . 
+. . c 6 3 3 3 3 6 c . . . . . . 
+. c 3 3 3 3 3 c c 6 c . c c . . 
+c 3 3 3 3 3 c 5 5 c 6 c 5 5 b . 
+c 3 3 3 3 3 f f 5 c 6 c 5 f f . 
+c c 3 3 3 6 f f 5 c 6 c 5 f f . 
+c c 6 6 6 6 c 5 5 3 c 3 5 5 b . 
+c 3 3 3 3 3 3 c 5 5 3 5 5 b . . 
+c 3 3 3 3 c c b 5 5 5 5 5 c c . 
+. c 3 3 c 5 5 b 4 5 5 5 4 5 5 c 
+. . b b c 5 b b 4 4 4 4 b 4 5 b 
+. b 5 4 c 4 5 5 5 b 4 b 5 5 4 c 
+. c 5 c 4 c 5 5 5 c 4 c 5 5 5 c 
+. c 5 c 4 c 5 5 5 5 c 5 5 5 5 c 
+. c c c . . c c c c c c c c c . 
+`;
         }
         return null;
     })
@@ -1014,6 +1052,146 @@ f.................................
 ..................................
 ..................................
 ..................................
+`];
+            case "crab_right_walking_animation":
+            case "anim12":return [img`
+. . . c c . . . . . . . . . . . 
+. . c 3 6 c c c c . . . . . . . 
+. . c 6 3 3 3 3 6 c . . . . . . 
+. c 3 3 3 3 3 c c 6 c . c c . . 
+c 3 3 3 3 3 c 5 5 c 6 c 5 5 b . 
+c 3 3 3 3 3 f f 5 c 6 c 5 f f . 
+c c 3 3 3 6 f f 5 c 6 c 5 f f . 
+c c 6 6 6 6 c 5 5 3 c 3 5 5 b . 
+c 3 3 3 3 3 3 c 5 5 3 5 5 b . . 
+c 3 3 3 3 3 c c b 5 5 5 5 c . . 
+. c 3 3 3 c 5 5 b 4 5 5 4 c . . 
+. . b b b c c 5 b b 4 4 b 5 c . 
+. b 5 4 4 4 c 4 5 5 5 b 4 4 c . 
+. c 5 c 4 4 4 c 5 5 5 c 4 5 c . 
+. c c c 4 4 4 c 5 5 5 5 c 5 c . 
+. . . . . . . c c c c c c c . . 
+`, img`
+. . . . . . . . . . . . . . . . 
+. . . . c c . . . . . . . . . . 
+. . . c 3 6 c c c c . . . . . . 
+. . . c 6 3 3 3 6 6 c . . . . . 
+. . c 3 3 3 3 3 3 6 6 c . . . . 
+. c 3 3 3 3 3 3 c c 6 6 c c c b 
+. c 3 3 3 3 3 c 5 5 c 6 c 5 5 b 
+. c c 3 3 3 6 f f 5 c 6 c 5 f f 
+. c c 6 6 6 6 f f 5 c c c 5 f f 
+. c 3 3 3 3 3 3 c 5 5 3 5 5 b . 
+. c 3 3 3 3 c c c 4 5 5 5 5 c . 
+. . c 3 3 c 5 5 b 4 4 5 5 4 c . 
+. . . c b b c 5 b b 4 4 b 5 c . 
+. . . c 5 c c 5 5 5 c 4 5 c c . 
+. . . c c c c 5 5 5 5 c c . . . 
+. . . . . . c c c c c c . . . . 
+`, img`
+. . . . . . . . . . . . . . . . 
+. . . c c . . . . . . . . . . . 
+. . c 3 6 c c c c . . . . . . . 
+. . c 6 3 3 3 6 6 c . . . . . . 
+. c 3 3 3 3 3 3 6 6 c . . . . . 
+c 3 3 3 3 3 3 c c 6 6 c c c b . 
+c 3 3 3 3 3 c 5 5 c 6 c 5 5 b . 
+c c 3 3 3 6 f f 5 c 6 c 5 f f . 
+c c 6 6 6 6 f f 5 c c c 5 f f . 
+c 3 3 3 3 c c c 5 5 3 5 5 b . . 
+c 3 3 3 c 5 5 b 5 5 5 5 5 c . . 
+. c 3 3 c 5 b b 4 4 5 5 4 4 c . 
+. . c b 5 5 5 b 4 4 4 b 5 5 c . 
+. . b c 5 5 5 c 4 4 4 5 5 5 c . 
+. . c c 5 5 5 5 c 4 c c c c . . 
+. . c c c c c c c c c c . . . . 
+`, img`
+. . . c c . . . . . . . . . . . 
+. . c 3 6 c c c c . . . . . . . 
+. . c 6 3 3 3 3 6 c . . . . . . 
+. c 3 3 3 3 3 c c 6 c . c c . . 
+c 3 3 3 3 3 c 5 5 c 6 c 5 5 b . 
+c 3 3 3 3 3 f f 5 c 6 c 5 f f . 
+c c 3 3 3 6 f f 5 c 6 c 5 f f . 
+c c 6 6 6 6 c 5 5 3 c 3 5 5 b . 
+c 3 3 3 3 3 3 c 5 5 3 5 5 b . . 
+c 3 3 3 3 3 c c 4 5 5 5 5 c c . 
+. c 3 3 3 c 5 5 c 4 5 5 4 5 5 c 
+. . c c b 5 5 5 c 4 4 4 b 4 5 b 
+. . b b c 5 5 5 c 4 4 b 5 5 4 c 
+. b 5 c c 5 5 5 5 c 4 c 5 5 5 c 
+. c 5 c c c c c c 4 c 5 5 5 5 c 
+. c c c . . . . . c c c c c c . 
+`];
+            case "crab_right_walking_animation0":
+            case "anim13":return [img`
+. . . . . . . . . . . c c . . . 
+. . . . . . . c c c c 6 3 c . . 
+. . . . . . c 6 3 3 3 3 6 c . . 
+. . c c . c 6 c c 3 3 3 3 3 c . 
+. b 5 5 c 6 c 5 5 c 3 3 3 3 3 c 
+. f f 5 c 6 c 5 f f 3 3 3 3 3 c 
+. f f 5 c 6 c 5 f f 6 3 3 3 c c 
+. b 5 5 3 c 3 5 5 c 6 6 6 6 c c 
+. . b 5 5 3 5 5 c 3 3 3 3 3 3 c 
+. . c 5 5 5 5 b c c 3 3 3 3 3 c 
+. . c 4 5 5 4 b 5 5 c 3 3 3 c . 
+. c 5 b 4 4 b b 5 c c b b b . . 
+. c 4 4 b 5 5 5 4 c 4 4 4 5 b . 
+. c 5 4 c 5 5 5 c 4 4 4 c 5 c . 
+. c 5 c 5 5 5 5 c 4 4 4 c c c . 
+. . c c c c c c c . . . . . . . 
+`, img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . c c . . . . 
+. . . . . . c c c c 6 3 c . . . 
+. . . . . c 6 6 3 3 3 6 c . . . 
+. . . . c 6 6 3 3 3 3 3 3 c . . 
+b c c c 6 6 c c 3 3 3 3 3 3 c . 
+b 5 5 c 6 c 5 5 c 3 3 3 3 3 c . 
+f f 5 c 6 c 5 f f 6 3 3 3 c c . 
+f f 5 c c c 5 f f 6 6 6 6 c c . 
+. b 5 5 3 5 5 c 3 3 3 3 3 3 c . 
+. c 5 5 5 5 4 c c c 3 3 3 3 c . 
+. c 4 5 5 4 4 b 5 5 c 3 3 c . . 
+. c 5 b 4 4 b b 5 c b b c . . . 
+. c c 5 4 c 5 5 5 c c 5 c . . . 
+. . . c c 5 5 5 5 c c c c . . . 
+. . . . c c c c c c . . . . . . 
+`, img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . c c . . . 
+. . . . . . . c c c c 6 3 c . . 
+. . . . . . c 6 6 3 3 3 6 c . . 
+. . . . . c 6 6 3 3 3 3 3 3 c . 
+. b c c c 6 6 c c 3 3 3 3 3 3 c 
+. b 5 5 c 6 c 5 5 c 3 3 3 3 3 c 
+. f f 5 c 6 c 5 f f 6 3 3 3 c c 
+. f f 5 c c c 5 f f 6 6 6 6 c c 
+. . b 5 5 3 5 5 c c c 3 3 3 3 c 
+. . c 5 5 5 5 5 b 5 5 c 3 3 3 c 
+. c 4 4 5 5 4 4 b b 5 c 3 3 c . 
+. c 5 5 b 4 4 4 b 5 5 5 b c . . 
+. c 5 5 5 4 4 4 c 5 5 5 c b . . 
+. . c c c c 4 c 5 5 5 5 c c . . 
+. . . . c c c c c c c c c c . . 
+`, img`
+. . . . . . . . . . . c c . . . 
+. . . . . . . c c c c 6 3 c . . 
+. . . . . . c 6 3 3 3 3 6 c . . 
+. . c c . c 6 c c 3 3 3 3 3 c . 
+. b 5 5 c 6 c 5 5 c 3 3 3 3 3 c 
+. f f 5 c 6 c 5 f f 3 3 3 3 3 c 
+. f f 5 c 6 c 5 f f 6 3 3 3 c c 
+. b 5 5 3 c 3 5 5 c 6 6 6 6 c c 
+. . b 5 5 3 5 5 c 3 3 3 3 3 3 c 
+. c c 5 5 5 5 4 c c 3 3 3 3 3 c 
+c 5 5 4 5 5 4 c 5 5 c 3 3 3 c . 
+b 5 4 b 4 4 4 c 5 5 5 b c c . . 
+c 4 5 5 b 4 4 c 5 5 5 c b b . . 
+c 5 5 5 c 4 c 5 5 5 5 c c 5 b . 
+c 5 5 5 5 c 4 c c c c c c 5 c . 
+. c c c c c c . . . . . c c c . 
 `];
             case "crab_left_animation":
             case "anim11":return [img`

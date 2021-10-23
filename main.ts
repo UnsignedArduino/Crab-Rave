@@ -3,6 +3,7 @@ namespace SpriteKind {
     export const RhythmButton = SpriteKind.create()
     export const RhythmSuccess = SpriteKind.create()
     export const RhythmFail = SpriteKind.create()
+    export const DecorationCrab = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.RhythmButton, SpriteKind.RhythmFail, function (sprite, otherSprite) {
     sprite.setVelocity(0, 100)
@@ -12,6 +13,15 @@ sprites.onOverlap(SpriteKind.RhythmButton, SpriteKind.RhythmFail, function (spri
     })
     popup_message(0, false)
 })
+function part_3 () {
+    animation_state = 2
+    do_buttons_for_part(3, 1500)
+}
+function part_4_transition () {
+    animation_state = 3
+    add_crabs(1)
+    do_buttons_for_part(4, 1250)
+}
 function part_1 () {
     animation_state = 0
     do_buttons_for_part(1, 2000)
@@ -104,9 +114,46 @@ function get_part_music (part: number) {
 }
 function make_player () {
     sprite_player = sprites.create(assets.image`crab_idle_left`, SpriteKind.Player)
+    sprite_player.setFlag(SpriteFlag.Ghost, true)
+    sprites.setDataBoolean(sprite_player, "facing_left", true)
     tiles.placeOnTile(sprite_player, tiles.getTileLocation(4, 5))
     sprite_player.x += tiles.tileWidth() / 2
-    sprite_player.setFlag(SpriteFlag.Ghost, true)
+}
+function add_crabs (count: number) {
+    timer.background(function () {
+        for (let index = 0; index < count; index++) {
+            sprite_left_crab = sprites.create(assets.image`crab_idle_right`, SpriteKind.DecorationCrab)
+            sprite_left_crab.setFlag(SpriteFlag.Ghost, true)
+            sprites.setDataBoolean(sprite_left_crab, "facing_left", true)
+            sprite_left_crab.right = 0
+            sprite_left_crab.y = sprite_player.y
+            animation.runImageAnimation(
+            sprite_left_crab,
+            assets.animation`crab_right_walking_animation`,
+            200,
+            true
+            )
+            sprite_right_crab = sprites.create(assets.image`crab_idle_left`, SpriteKind.DecorationCrab)
+            sprite_right_crab.setFlag(SpriteFlag.Ghost, true)
+            sprites.setDataBoolean(sprite_right_crab, "facing_left", false)
+            sprite_right_crab.left = scene.screenWidth()
+            sprite_right_crab.y = sprite_player.y
+            animation.runImageAnimation(
+            sprite_right_crab,
+            assets.animation`crab_right_walking_animation0`,
+            200,
+            true
+            )
+            timer.background(function () {
+                story.spriteMoveToLocation(sprite_right_crab, all_crabs[all_crabs.length - 1].x + 32, sprite_player.y, 30)
+                animation.stopAnimation(animation.AnimationTypes.All, sprite_right_crab)
+            })
+            story.spriteMoveToLocation(sprite_left_crab, all_crabs[0].x - 32, sprite_player.y, 30)
+            animation.stopAnimation(animation.AnimationTypes.All, sprite_left_crab)
+            all_crabs.unshift(sprite_left_crab)
+            all_crabs.push(sprite_right_crab)
+        }
+    })
 }
 function make_rhythm_stuff () {
     sprite_rhythm_bar = sprites.create(assets.image`rhythm_bar`, SpriteKind.RhythmStuff)
@@ -138,6 +185,7 @@ function setup () {
     ]
     musical = MusicalImages.create_musical_image()
     make_player()
+    all_crabs = [sprite_player]
     make_rhythm_stuff()
 }
 function summon_button_press (button: string) {
@@ -153,7 +201,7 @@ function popup_message (accuracy: number, is_success: boolean) {
         sprite_message.destroy()
     }
     if (is_success) {
-        sprite_message = textsprite.create(get_success_message(accuracy), 0, 7)
+        sprite_message = textsprite.create(get_success_message(accuracy), 0, 6)
     } else {
         sprite_message = textsprite.create("Fail", 0, 2)
     }
@@ -195,6 +243,12 @@ function run_part (part: number) {
     timer.background(function () {
         if (part == 1) {
             part_1()
+        } else if (part == 2) {
+            part_2_transition()
+        } else if (part == 3) {
+            part_3()
+        } else if (part == 4) {
+            part_4_transition()
         }
     })
     MusicalImages.set_queue(musical, get_part_music(part))
@@ -203,12 +257,18 @@ function run_part (part: number) {
 function change_score (s: number) {
     score += s
 }
+function part_2_transition () {
+    animation_state = 1
+    add_crabs(1)
+    do_buttons_for_part(2, 1750)
+}
 function do_buttons_for_part (part: number, frequency: number) {
     while (current_part == part) {
         summon_button_press(allowed_buttons._pickRandom())
         pause(randint(frequency - 500, frequency + 500))
     }
 }
+let frame_delay = 0
 let sprite_message: TextSprite = null
 let sprite_button_press: Sprite = null
 let musical: MusicalImages.MusicalImage = null
@@ -218,6 +278,9 @@ let button_speed = 0
 let sprite_failed_overlapper: Sprite = null
 let sprite_overlapper: Sprite = null
 let sprite_rhythm_bar: Sprite = null
+let all_crabs: Sprite[] = []
+let sprite_right_crab: Sprite = null
+let sprite_left_crab: Sprite = null
 let show_score = 0
 let sprite_score: TextSprite = null
 let sprite_player: Sprite = null
@@ -229,6 +292,7 @@ color.Black
 )
 stats.turnStats(true)
 setup()
+music.setVolume(20)
 fade_out(true)
 timer.background(function () {
     for (let index = 0; index <= 13; index++) {
@@ -242,13 +306,33 @@ game.onUpdateInterval(20, function () {
     }
 })
 forever(function () {
-    if (animation_state == 0) {
-        animation.runImageAnimation(
-        sprite_player,
-        assets.animation`crab_left_animation`,
-        200,
-        false
-        )
-        pause(assets.animation`crab_left_animation`.length * 200)
+    if (animation_state <= 3) {
+        if (animation_state == 0) {
+            frame_delay = 200
+        } else if (animation_state == 1) {
+            frame_delay = 166
+        } else if (animation_state == 2) {
+            frame_delay = 133
+        } else {
+            frame_delay = 100
+        }
+        for (let crab of all_crabs) {
+            if (sprites.readDataBoolean(crab, "facing_left")) {
+                animation.runImageAnimation(
+                crab,
+                assets.animation`crab_left_animation`,
+                frame_delay,
+                false
+                )
+            } else {
+                animation.runImageAnimation(
+                crab,
+                assets.animation`crab_right_walking_animation`,
+                frame_delay,
+                false
+                )
+            }
+        }
+        pause(assets.animation`crab_left_animation`.length * frame_delay)
     }
 })

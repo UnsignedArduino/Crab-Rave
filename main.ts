@@ -17,6 +17,11 @@ function part_3 () {
     animation_state = 2
     do_buttons_for_part(3, 1500)
 }
+function part_6 () {
+    animation_state = 0
+    remove_crabs(2)
+    do_buttons_for_part(6, 2000)
+}
 function part_4_transition () {
     animation_state = 3
     add_crabs(1)
@@ -90,6 +95,10 @@ function update_score () {
 function part_5 () {
     animation_state = 4
     do_buttons_for_part(5, 1000)
+}
+function part_8 () {
+    animation_state = 2
+    do_buttons_for_part(8, 1500)
 }
 function get_part_music (part: number) {
     if (part == 1 || part == 6) {
@@ -239,6 +248,34 @@ function get_button_image (button: string) {
         return [][0]
     }
 }
+function remove_crabs (count: number) {
+    timer.background(function () {
+        for (let index = 0; index < count; index++) {
+            sprite_left_crab = all_crabs.shift()
+            sprite_left_crab.setFlag(SpriteFlag.AutoDestroy, true)
+            animation.runImageAnimation(
+            sprite_left_crab,
+            assets.animation`crab_right_walking_animation0`,
+            200,
+            true
+            )
+            sprite_right_crab = all_crabs.pop()
+            sprite_right_crab.setFlag(SpriteFlag.AutoDestroy, true)
+            animation.runImageAnimation(
+            sprite_right_crab,
+            assets.animation`crab_right_walking_animation`,
+            200,
+            true
+            )
+            timer.background(function () {
+                story.spriteMoveToLocation(sprite_left_crab, -8, sprite_player.y, 30)
+                animation.stopAnimation(animation.AnimationTypes.All, sprite_right_crab)
+            })
+            story.spriteMoveToLocation(sprite_right_crab, scene.screenWidth() + 8, sprite_player.y, 30)
+            animation.stopAnimation(animation.AnimationTypes.All, sprite_left_crab)
+        }
+    })
+}
 function run_part (part: number) {
     if (part < 1 && part > 14) {
         return
@@ -255,6 +292,16 @@ function run_part (part: number) {
             part_4_transition()
         } else if (part == 5) {
             part_5()
+        } else if (part == 6) {
+            part_6()
+        } else if (part == 7) {
+            part_7_transition()
+        } else if (part == 8) {
+            part_8()
+        } else if (part == 9) {
+            part_9_transition()
+        } else {
+        	
         }
     })
     MusicalImages.set_queue(musical, get_part_music(part))
@@ -263,10 +310,20 @@ function run_part (part: number) {
 function change_score (s: number) {
     score += s
 }
+function part_9_transition () {
+    animation_state = 3
+    add_crabs(1)
+    do_buttons_for_part(9, 1250)
+}
 function part_2_transition () {
     animation_state = 1
     add_crabs(1)
     do_buttons_for_part(2, 1750)
+}
+function part_7_transition () {
+    animation_state = 1
+    add_crabs(1)
+    do_buttons_for_part(7, 1750)
 }
 function do_buttons_for_part (part: number, frequency: number) {
     while (current_part == part) {
@@ -343,7 +400,7 @@ forever(function () {
                 )
             }
         }
-        pause(assets.animation`crab_left_animation`.length * frame_delay)
+        pause(assets.animation`crab_right_walking_animation0`.length * frame_delay)
     } else {
         for (let crab of all_crabs) {
             if (sprites.readDataBoolean(crab, "facing_left")) {

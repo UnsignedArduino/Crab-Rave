@@ -17,6 +17,10 @@ function part_3 () {
     animation_state = 2
     do_buttons_for_part(3, 1500)
 }
+function part_10_transition () {
+    animation_state = 3
+    do_buttons_for_part(10, 1000)
+}
 function part_6 () {
     animation_state = 0
     remove_crabs(2)
@@ -46,6 +50,9 @@ function get_button_pressed () {
 }
 function set_score (s: number) {
     score = s
+}
+function part_14 () {
+    animation_state = -1
 }
 function fade_out (block: boolean) {
     color.startFade(color.Black, color.originalPalette, 1000)
@@ -96,9 +103,20 @@ function part_5 () {
     animation_state = 4
     do_buttons_for_part(5, 1000)
 }
+function fade_in (block: boolean) {
+    color.startFade(color.originalPalette, color.Black, 1000)
+    if (block) {
+        color.pauseUntilFadeDone()
+    }
+}
 function part_8 () {
     animation_state = 2
     do_buttons_for_part(8, 1500)
+}
+function part_12 () {
+    animation_state = 2
+    remove_crabs(1)
+    do_buttons_for_part(12, 1500)
 }
 function get_part_music (part: number) {
     if (part == 1 || part == 6) {
@@ -248,6 +266,10 @@ function get_button_image (button: string) {
         return [][0]
     }
 }
+function part_11 () {
+    animation_state = 4
+    do_buttons_for_part(11, 1000)
+}
 function remove_crabs (count: number) {
     timer.background(function () {
         for (let index = 0; index < count; index++) {
@@ -300,8 +322,16 @@ function run_part (part: number) {
             part_8()
         } else if (part == 9) {
             part_9_transition()
-        } else {
-        	
+        } else if (part == 10) {
+            part_10_transition()
+        } else if (part == 11) {
+            part_11()
+        } else if (part == 12) {
+            part_12()
+        } else if (part == 13) {
+            part_13()
+        } else if (part == 14) {
+            part_14()
         }
     })
     MusicalImages.set_queue(musical, get_part_music(part))
@@ -314,6 +344,11 @@ function part_9_transition () {
     animation_state = 3
     add_crabs(1)
     do_buttons_for_part(9, 1250)
+}
+function part_13 () {
+    animation_state = 1
+    remove_crabs(1)
+    do_buttons_for_part(13, 1500)
 }
 function part_2_transition () {
     animation_state = 1
@@ -356,11 +391,13 @@ color.Black
 stats.turnStats(true)
 setup()
 music.setVolume(20)
-fade_out(true)
 timer.background(function () {
+    fade_out(true)
     for (let index = 0; index <= 13; index++) {
         run_part(index + 1)
     }
+    pause(2000)
+    fade_in(true)
 })
 game.onUpdateInterval(20, function () {
     if (score > show_score) {
@@ -373,7 +410,12 @@ game.onUpdateInterval(20, function () {
     }
 })
 forever(function () {
-    if (animation_state <= 3) {
+    if (animation_state == -1) {
+        for (let crab of all_crabs) {
+            animation.stopAnimation(animation.AnimationTypes.All, crab)
+        }
+        pause(20)
+    } else if (animation_state <= 3) {
         if (animation_state == 0) {
             frame_delay = 200
         } else if (animation_state == 1) {

@@ -15,25 +15,25 @@ sprites.onOverlap(SpriteKind.RhythmButton, SpriteKind.RhythmFail, function (spri
 })
 function part_3 () {
     animation_state = 2
-    do_buttons_for_part(3, 1500)
+    button_freq = 1500
 }
 function part_10_transition () {
     animation_state = 3
-    do_buttons_for_part(10, 1000)
+    button_freq = 1000
 }
 function part_6 () {
     animation_state = 0
     remove_crabs(2)
-    do_buttons_for_part(6, 2000)
+    button_freq = 2000
 }
 function part_4_transition () {
     animation_state = 3
     add_crabs(1)
-    do_buttons_for_part(4, 1250)
+    button_freq = 1250
 }
 function part_1 () {
     animation_state = 0
-    do_buttons_for_part(1, 2000)
+    button_freq = 2000
 }
 function get_button_pressed () {
     if (controller.up.isPressed()) {
@@ -53,6 +53,7 @@ function set_score (s: number) {
 }
 function part_14 () {
     animation_state = -1
+    button_freq = -1
 }
 function fade_out (block: boolean) {
     color.startFade(color.Black, color.originalPalette, 1000)
@@ -101,7 +102,7 @@ function update_score () {
 }
 function part_5 () {
     animation_state = 4
-    do_buttons_for_part(5, 1000)
+    button_freq = 1000
 }
 function fade_in (block: boolean) {
     color.startFade(color.originalPalette, color.Black, 1000)
@@ -111,12 +112,12 @@ function fade_in (block: boolean) {
 }
 function part_8 () {
     animation_state = 2
-    do_buttons_for_part(8, 1500)
+    button_freq = 1500
 }
 function part_12 () {
     animation_state = 2
     remove_crabs(1)
-    do_buttons_for_part(12, 1500)
+    button_freq = 1500
 }
 function get_part_music (part: number) {
     if (part == 1 || part == 6) {
@@ -208,6 +209,7 @@ function setup () {
     button_speed = 50
     current_part = 0
     animation_state = 0
+    button_freq = 2000
     allowed_buttons = [
     controller.combos.idToString(controller.combos.ID.up),
     controller.combos.idToString(controller.combos.ID.down),
@@ -268,7 +270,7 @@ function get_button_image (button: string) {
 }
 function part_11 () {
     animation_state = 4
-    do_buttons_for_part(11, 1000)
+    button_freq = 1000
 }
 function remove_crabs (count: number) {
     timer.background(function () {
@@ -303,37 +305,35 @@ function run_part (part: number) {
         return
     }
     current_part = part
-    timer.background(function () {
-        if (part == 1) {
-            part_1()
-        } else if (part == 2) {
-            part_2_transition()
-        } else if (part == 3) {
-            part_3()
-        } else if (part == 4) {
-            part_4_transition()
-        } else if (part == 5) {
-            part_5()
-        } else if (part == 6) {
-            part_6()
-        } else if (part == 7) {
-            part_7_transition()
-        } else if (part == 8) {
-            part_8()
-        } else if (part == 9) {
-            part_9_transition()
-        } else if (part == 10) {
-            part_10_transition()
-        } else if (part == 11) {
-            part_11()
-        } else if (part == 12) {
-            part_12()
-        } else if (part == 13) {
-            part_13()
-        } else if (part == 14) {
-            part_14()
-        }
-    })
+    if (part == 1) {
+        part_1()
+    } else if (part == 2) {
+        part_2_transition()
+    } else if (part == 3) {
+        part_3()
+    } else if (part == 4) {
+        part_4_transition()
+    } else if (part == 5) {
+        part_5()
+    } else if (part == 6) {
+        part_6()
+    } else if (part == 7) {
+        part_7_transition()
+    } else if (part == 8) {
+        part_8()
+    } else if (part == 9) {
+        part_9_transition()
+    } else if (part == 10) {
+        part_10_transition()
+    } else if (part == 11) {
+        part_11()
+    } else if (part == 12) {
+        part_12()
+    } else if (part == 13) {
+        part_13()
+    } else if (part == 14) {
+        part_14()
+    }
     MusicalImages.set_queue(musical, get_part_music(part))
     MusicalImages.play(musical)
 }
@@ -343,28 +343,22 @@ function change_score (s: number) {
 function part_9_transition () {
     animation_state = 3
     add_crabs(1)
-    do_buttons_for_part(9, 1250)
+    button_freq = 1250
 }
 function part_13 () {
     animation_state = 1
     remove_crabs(1)
-    do_buttons_for_part(13, 1500)
+    button_freq = 1500
 }
 function part_2_transition () {
     animation_state = 1
     add_crabs(1)
-    do_buttons_for_part(2, 1750)
+    button_freq = 1750
 }
 function part_7_transition () {
     animation_state = 1
     add_crabs(1)
-    do_buttons_for_part(7, 1750)
-}
-function do_buttons_for_part (part: number, frequency: number) {
-    while (current_part == part) {
-        summon_button_press(allowed_buttons._pickRandom())
-        pause(randint(frequency - 500, frequency + 500))
-    }
+    button_freq = 1750
 }
 let frame_delay = 0
 let sprite_message: TextSprite = null
@@ -384,6 +378,7 @@ let sprite_score: TextSprite = null
 let sprite_player: Sprite = null
 let accuracy = 0
 let score = 0
+let button_freq = 0
 let animation_state = 0
 color.setPalette(
 color.Black
@@ -462,5 +457,11 @@ forever(function () {
             }
         }
         pause(assets.animation`crab_attack_left`.length * 100)
+    }
+})
+forever(function () {
+    if (button_freq != -1) {
+        summon_button_press(allowed_buttons._pickRandom())
+        pause(randint(button_freq - 500, button_freq + 500))
     }
 })

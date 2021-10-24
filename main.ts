@@ -4,6 +4,7 @@ namespace SpriteKind {
     export const RhythmSuccess = SpriteKind.create()
     export const RhythmFail = SpriteKind.create()
     export const DecorationCrab = SpriteKind.create()
+    export const DecorationFIsh = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.RhythmButton, SpriteKind.RhythmFail, function (sprite, otherSprite) {
     sprite.setVelocity(0, 100)
@@ -23,13 +24,88 @@ function part_10_transition () {
 }
 function part_6 () {
     animation_state = 0
-    remove_crabs(2)
     button_freq = 2000
+    remove_crabs(2)
+    remove_fish(1)
 }
 function part_4_transition () {
     animation_state = 3
-    add_crabs(1)
     button_freq = 1250
+    add_crabs(1)
+    add_fish(1)
+}
+function add_fish (count: number) {
+    timer.background(function () {
+        for (let index = 0; index < count; index++) {
+            if (fish_count == 0) {
+                left_fish = sprites.create(assets.image`right_fish_idle`, SpriteKind.DecorationFIsh)
+                animation.runImageAnimation(
+                left_fish,
+                assets.animation`right_fish_animation`,
+                200,
+                true
+                )
+            } else {
+                left_fish = sprites.create(assets.image`right_fish_2_idle`, SpriteKind.DecorationFIsh)
+                animation.runImageAnimation(
+                left_fish,
+                assets.animation`right_fish_2_animation`,
+                200,
+                true
+                )
+            }
+            left_fish.setFlag(SpriteFlag.Ghost, true)
+            sprites.setDataBoolean(left_fish, "facing_left", false)
+            left_fish.right = 0
+            if (fish_count == 0) {
+                left_fish.y = tiles.locationXY(tiles.getTilesByType(assets.tile`left_fish_3`)[0], tiles.XY.y)
+            } else {
+                left_fish.y = tiles.locationXY(tiles.getTilesByType(assets.tile`left_fish_1`)[0], tiles.XY.y)
+            }
+            if (fish_count == 0) {
+                right_fish = sprites.create(assets.image`right_fish_idle`, SpriteKind.DecorationFIsh)
+                animation.runImageAnimation(
+                right_fish,
+                assets.animation`left_fish_animation0`,
+                200,
+                true
+                )
+            } else {
+                right_fish = sprites.create(assets.image`right_fish_2_idle`, SpriteKind.DecorationFIsh)
+                animation.runImageAnimation(
+                right_fish,
+                assets.animation`left_fish_animation`,
+                200,
+                true
+                )
+            }
+            right_fish.setFlag(SpriteFlag.Ghost, true)
+            sprites.setDataBoolean(right_fish, "facing_left", true)
+            right_fish.left = scene.screenWidth()
+            if (fish_count == 0) {
+                right_fish.y = tiles.locationXY(tiles.getTilesByType(assets.tile`right_fish_1`)[0], tiles.XY.y)
+                timer.background(function () {
+                    story.spriteMoveToLocation(right_fish, tiles.locationXY(tiles.getTilesByType(assets.tile`right_fish_1`)[0], tiles.XY.x), right_fish.y, 30)
+                })
+                story.spriteMoveToLocation(left_fish, tiles.locationXY(tiles.getTilesByType(assets.tile`left_fish_3`)[0], tiles.XY.x), left_fish.y, 30)
+            } else {
+                right_fish.y = tiles.locationXY(tiles.getTilesByType(assets.tile`right_fish_2`)[0], tiles.XY.y)
+                timer.background(function () {
+                    story.spriteMoveToLocation(right_fish, tiles.locationXY(tiles.getTilesByType(assets.tile`right_fish_2`)[0], tiles.XY.x), right_fish.y, 30)
+                })
+                story.spriteMoveToLocation(left_fish, tiles.locationXY(tiles.getTilesByType(assets.tile`left_fish_1`)[0], tiles.XY.x), left_fish.y, 30)
+            }
+            fish_count += 1
+        }
+    })
+}
+function prepare_tilemap () {
+    scene.setBackgroundColor(9)
+    tiles.setTilemap(tilemap`map`)
+    tiles.coverAllTiles(assets.tile`left_fish_3`, assets.tile`water`)
+    tiles.coverAllTiles(assets.tile`left_fish_1`, assets.tile`water`)
+    tiles.coverAllTiles(assets.tile`right_fish_1`, assets.tile`water`)
+    tiles.coverAllTiles(assets.tile`right_fish_2`, assets.tile`water`)
 }
 function part_1 () {
     animation_state = 0
@@ -116,8 +192,9 @@ function part_8 () {
 }
 function part_12 () {
     animation_state = 2
-    remove_crabs(1)
     button_freq = 1500
+    remove_crabs(1)
+    remove_fish(1)
 }
 function get_part_music (part: number) {
     if (part == 1 || part == 6) {
@@ -143,6 +220,55 @@ function get_part_music (part: number) {
     } else {
         return []
     }
+}
+function remove_fish (count: number) {
+    timer.background(function () {
+        for (let index = 0; index < count; index++) {
+            if (fish_count == 1) {
+                left_fish = get_sprite_at(tiles.locationXY(tiles.getTilesByType(assets.tile`left_fish_3`)[0], tiles.XY.column), tiles.locationXY(tiles.getTilesByType(assets.tile`left_fish_3`)[0], tiles.XY.row), SpriteKind.DecorationFIsh)
+                animation.runImageAnimation(
+                left_fish,
+                assets.animation`left_fish_animation0`,
+                200,
+                true
+                )
+            } else {
+                left_fish = get_sprite_at(tiles.locationXY(tiles.getTilesByType(assets.tile`left_fish_1`)[0], tiles.XY.column), tiles.locationXY(tiles.getTilesByType(assets.tile`left_fish_1`)[0], tiles.XY.row), SpriteKind.DecorationFIsh)
+                animation.runImageAnimation(
+                left_fish,
+                assets.animation`left_fish_animation`,
+                200,
+                true
+                )
+            }
+            left_fish.setFlag(SpriteFlag.AutoDestroy, true)
+            sprites.setDataBoolean(left_fish, "facing_left", true)
+            if (fish_count == 1) {
+                right_fish = get_sprite_at(tiles.locationXY(tiles.getTilesByType(assets.tile`right_fish_1`)[0], tiles.XY.column), tiles.locationXY(tiles.getTilesByType(assets.tile`right_fish_1`)[0], tiles.XY.row), SpriteKind.DecorationFIsh)
+                animation.runImageAnimation(
+                right_fish,
+                assets.animation`right_fish_animation`,
+                200,
+                true
+                )
+            } else {
+                right_fish = get_sprite_at(tiles.locationXY(tiles.getTilesByType(assets.tile`right_fish_2`)[0], tiles.XY.column), tiles.locationXY(tiles.getTilesByType(assets.tile`right_fish_2`)[0], tiles.XY.row), SpriteKind.DecorationFIsh)
+                animation.runImageAnimation(
+                right_fish,
+                assets.animation`right_fish_2_animation`,
+                200,
+                true
+                )
+            }
+            right_fish.setFlag(SpriteFlag.AutoDestroy, true)
+            sprites.setDataBoolean(right_fish, "facing_left", false)
+            timer.background(function () {
+                story.spriteMoveToLocation(right_fish, scene.screenWidth() + 8, right_fish.y, 30)
+            })
+            story.spriteMoveToLocation(left_fish, -8, left_fish.y, 30)
+            fish_count += -1
+        }
+    })
 }
 function make_player () {
     sprite_player = sprites.create(assets.image`crab_idle_left`, SpriteKind.Player)
@@ -201,15 +327,14 @@ function make_rhythm_stuff () {
     sprite_failed_overlapper.setFlag(SpriteFlag.Invisible, true)
 }
 function setup () {
-    scene.setBackgroundColor(9)
-    tiles.setTilemap(tilemap`map`)
+    prepare_tilemap()
     set_score(0)
     show_score = 0
     update_score()
     button_speed = 50
     current_part = 0
     animation_state = 0
-    button_freq = 2000
+    button_freq = -1
     allowed_buttons = [
     controller.combos.idToString(controller.combos.ID.up),
     controller.combos.idToString(controller.combos.ID.down),
@@ -219,6 +344,7 @@ function setup () {
     musical = MusicalImages.create_musical_image()
     make_player()
     all_crabs = [sprite_player]
+    fish_count = 0
     make_rhythm_stuff()
 }
 function summon_button_press (button: string) {
@@ -342,23 +468,33 @@ function change_score (s: number) {
 }
 function part_9_transition () {
     animation_state = 3
-    add_crabs(1)
     button_freq = 1250
+    add_crabs(1)
+    add_fish(2)
 }
 function part_13 () {
     animation_state = 1
-    remove_crabs(1)
     button_freq = 1500
+    remove_crabs(1)
+    remove_fish(1)
 }
 function part_2_transition () {
     animation_state = 1
-    add_crabs(1)
     button_freq = 1750
+    add_crabs(1)
+}
+function get_sprite_at (col: number, row: number, kind: number) {
+    for (let sprite of sprites.allOfKind(kind)) {
+        if (tiles.locationXY(tiles.locationOfSprite(sprite), tiles.XY.column) == col && tiles.locationXY(tiles.locationOfSprite(sprite), tiles.XY.row) == row) {
+            return sprite
+        }
+    }
+    return [][0]
 }
 function part_7_transition () {
     animation_state = 1
-    add_crabs(1)
     button_freq = 1750
+    add_crabs(1)
 }
 let frame_delay = 0
 let sprite_message: TextSprite = null
@@ -378,6 +514,9 @@ let sprite_score: TextSprite = null
 let sprite_player: Sprite = null
 let accuracy = 0
 let score = 0
+let right_fish: Sprite = null
+let left_fish: Sprite = null
+let fish_count = 0
 let button_freq = 0
 let animation_state = 0
 color.setPalette(
@@ -391,7 +530,7 @@ timer.background(function () {
     for (let index = 0; index <= 13; index++) {
         run_part(index + 1)
     }
-    pause(2000)
+    pause(1000)
     fade_in(true)
 })
 game.onUpdateInterval(20, function () {

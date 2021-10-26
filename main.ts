@@ -34,6 +34,12 @@ function part_4_transition () {
     add_crabs(1)
     add_fish(1)
 }
+function make_text (text: string, x: number, y: number) {
+    sprite_message = textsprite.create(text, 0, 1)
+    sprite_message.x = x
+    sprite_message.y = y
+    return sprite_message
+}
 function add_fish (count: number) {
     timer.background(function () {
         for (let index = 0; index < count; index++) {
@@ -101,7 +107,7 @@ function add_fish (count: number) {
 }
 function prepare_tilemap () {
     scene.setBackgroundColor(9)
-    tiles.setTilemap(tilemap`map`)
+    tiles.loadMap(tiles.createMap(tilemap`map`))
     tiles.coverAllTiles(assets.tile`left_fish_3`, assets.tile`water`)
     tiles.coverAllTiles(assets.tile`left_fish_1`, assets.tile`water`)
     tiles.coverAllTiles(assets.tile`right_fish_1`, assets.tile`water`)
@@ -126,6 +132,18 @@ function get_button_pressed () {
 }
 function set_score (s: number) {
     score = s
+}
+function cleanup () {
+    scene.setBackgroundColor(0)
+    tiles.loadMap(tiles.createMap(tilemap`blank`))
+    tiles.destroySpritesOfKind(SpriteKind.Player)
+    tiles.destroySpritesOfKind(SpriteKind.Text)
+    tiles.destroySpritesOfKind(SpriteKind.RhythmStuff)
+    tiles.destroySpritesOfKind(SpriteKind.RhythmButton)
+    tiles.destroySpritesOfKind(SpriteKind.RhythmSuccess)
+    tiles.destroySpritesOfKind(SpriteKind.RhythmFail)
+    tiles.destroySpritesOfKind(SpriteKind.DecorationCrab)
+    tiles.destroySpritesOfKind(SpriteKind.DecorationFIsh)
 }
 function part_14 () {
     animation_state = -1
@@ -333,7 +351,7 @@ function setup () {
     update_score()
     button_speed = 50
     current_part = 0
-    animation_state = 0
+    animation_state = -1
     button_freq = -1
     allowed_buttons = [
     controller.combos.idToString(controller.combos.ID.up),
@@ -397,6 +415,11 @@ function get_button_image (button: string) {
 function part_11 () {
     animation_state = 4
     button_freq = 1000
+}
+function show_end_screen () {
+    make_text("Great job!", scene.screenWidth() / 2, 20)
+    make_text("Total score: ", scene.screenWidth() / 2, 90)
+    make_text("" + score, scene.screenWidth() / 2, 100)
 }
 function remove_crabs (count: number) {
     timer.background(function () {
@@ -497,7 +520,6 @@ function part_7_transition () {
     add_crabs(1)
 }
 let frame_delay = 0
-let sprite_message: TextSprite = null
 let sprite_button_press: Sprite = null
 let musical: MusicalImages.MusicalImage = null
 let allowed_buttons: string[] = []
@@ -509,16 +531,18 @@ let sprite_rhythm_bar: Sprite = null
 let all_crabs: Sprite[] = []
 let sprite_right_crab: Sprite = null
 let sprite_left_crab: Sprite = null
-let show_score = 0
 let sprite_score: TextSprite = null
 let sprite_player: Sprite = null
 let accuracy = 0
-let score = 0
 let right_fish: Sprite = null
 let left_fish: Sprite = null
 let fish_count = 0
+let sprite_message: TextSprite = null
 let button_freq = 0
 let animation_state = 0
+let show_score = 0
+let score = 0
+let in_game = false
 color.setPalette(
 color.Black
 )
@@ -527,20 +551,33 @@ setup()
 music.setVolume(20)
 timer.background(function () {
     fade_out(true)
-    for (let index = 0; index <= 13; index++) {
-        run_part(index + 1)
+    in_game = true
+    if (true) {
+        for (let index = 0; index <= 13; index++) {
+            run_part(index + 1)
+        }
     }
+    while (score != show_score) {
+        pause(100)
+    }
+    in_game = false
     pause(1000)
     fade_in(true)
+    cleanup()
+    pause(1000)
+    fade_out(false)
+    show_end_screen()
 })
 game.onUpdateInterval(20, function () {
-    if (score > show_score) {
-        if (score - show_score > 20) {
-            show_score += 3
-        } else {
-            show_score += 1
+    if (in_game) {
+        if (score > show_score) {
+            if (score - show_score > 20) {
+                show_score += 3
+            } else {
+                show_score += 1
+            }
+            update_score()
         }
-        update_score()
     }
 })
 forever(function () {

@@ -364,6 +364,11 @@ function setup () {
     all_crabs = [sprite_player]
     fish_count = 0
     make_rhythm_stuff()
+    count_amazing = 0
+    count_awesome = 0
+    count_great = 0
+    count_good = 0
+    count_success = 0
 }
 function summon_button_press (button: string) {
     sprite_button_press = sprites.create(get_button_image(button), SpriteKind.RhythmButton)
@@ -388,14 +393,19 @@ function popup_message (accuracy: number, is_success: boolean) {
 }
 function get_success_message (accuracy: number) {
     if (accuracy > 90) {
+        count_amazing += 1
         return "Amazing!"
     } else if (accuracy > 80) {
+        count_awesome += 1
         return "Awesome!"
     } else if (accuracy > 70) {
+        count_great += 1
         return "Great"
     } else if (accuracy > 60) {
-        return "Good!"
+        count_good += 1
+        return "Good"
     } else {
+        count_success += 1
         return "Success"
     }
 }
@@ -417,9 +427,14 @@ function part_11 () {
     button_freq = 1000
 }
 function show_end_screen () {
-    make_text("Great job!", scene.screenWidth() / 2, 20)
-    make_text("Total score: ", scene.screenWidth() / 2, 90)
-    make_text("" + score, scene.screenWidth() / 2, 100)
+    make_text("Great job!", scene.screenWidth() / 2, 15)
+    make_text("Success: " + count_success + "x", scene.screenWidth() / 2, 35)
+    make_text("Good: " + count_good + "x", scene.screenWidth() / 2, 45)
+    make_text("Great: " + count_great + "x", scene.screenWidth() / 2, 55)
+    make_text("Awesome: " + count_awesome + "x", scene.screenWidth() / 2, 65)
+    make_text("Amazing: " + count_amazing + "x", scene.screenWidth() / 2, 75)
+    make_text("Total score: ", scene.screenWidth() / 2, 95)
+    make_text("" + score, scene.screenWidth() / 2, 105)
 }
 function remove_crabs (count: number) {
     timer.background(function () {
@@ -521,6 +536,11 @@ function part_7_transition () {
 }
 let frame_delay = 0
 let sprite_button_press: Sprite = null
+let count_success = 0
+let count_good = 0
+let count_great = 0
+let count_awesome = 0
+let count_amazing = 0
 let musical: MusicalImages.MusicalImage = null
 let allowed_buttons: string[] = []
 let current_part = 0

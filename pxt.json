@@ -12,7 +12,8 @@
         "arcade-sprite-util": "github:jwunderl/arcade-sprite-util#v0.2.4",
         "pxt-button-combos": "github:jwunderl/pxt-button-combos#v0.0.24",
         "arcade-sprite-data": "github:microsoft/arcade-sprite-data#v0.1.0",
-        "arcade-story": "github:microsoft/arcade-storytelling#v1.0.3"
+        "arcade-story": "github:microsoft/arcade-storytelling#v1.0.3",
+        "settings-blocks": "github:microsoft/pxt-settings-blocks#v1.0.0"
     },
     "files": [
         "main.blocks",

@@ -427,14 +427,18 @@ function part_11 () {
     button_freq = 1000
 }
 function show_end_screen () {
-    make_text("Great job!", scene.screenWidth() / 2, 15)
-    make_text("Success: " + count_success + "x", scene.screenWidth() / 2, 35)
-    make_text("Good: " + count_good + "x", scene.screenWidth() / 2, 45)
-    make_text("Great: " + count_great + "x", scene.screenWidth() / 2, 55)
-    make_text("Awesome: " + count_awesome + "x", scene.screenWidth() / 2, 65)
-    make_text("Amazing: " + count_amazing + "x", scene.screenWidth() / 2, 75)
-    make_text("Total score: ", scene.screenWidth() / 2, 95)
-    make_text("" + score, scene.screenWidth() / 2, 105)
+    make_text("Great job!", scene.screenWidth() / 2, 10)
+    make_text("Success: " + count_success + "x", scene.screenWidth() / 2, 30)
+    make_text("Good: " + count_good + "x", scene.screenWidth() / 2, 40)
+    make_text("Great: " + count_great + "x", scene.screenWidth() / 2, 50)
+    make_text("Awesome: " + count_awesome + "x", scene.screenWidth() / 2, 60)
+    make_text("Amazing: " + count_amazing + "x", scene.screenWidth() / 2, 70)
+    make_text("Total score: " + score, scene.screenWidth() / 2, 90)
+    make_text("High score: " + old_high_score, scene.screenWidth() / 2, 100)
+    if (score > old_high_score) {
+        make_text("New high score!", scene.screenWidth() / 2, 110)
+        blockSettings.writeNumber("high_score", score)
+    }
 }
 function remove_crabs (count: number) {
     timer.background(function () {
@@ -563,12 +567,27 @@ let animation_state = 0
 let show_score = 0
 let score = 0
 let in_game = false
+let old_high_score = 0
 color.setPalette(
 color.Black
 )
 stats.turnStats(true)
+pause(100)
+if (!(blockSettings.exists("high_score"))) {
+    blockSettings.writeNumber("high_score", 0)
+}
+old_high_score = blockSettings.readNumber("high_score")
 setup()
 music.setVolume(20)
+if (controller.B.isPressed()) {
+    fade_out(true)
+    if (game.ask("Reset high score?")) {
+        blockSettings.clear()
+        game.showLongText("Successfully reset high score!", DialogLayout.Bottom)
+    }
+    fade_in(true)
+    game.reset()
+}
 timer.background(function () {
     fade_out(true)
     in_game = true
